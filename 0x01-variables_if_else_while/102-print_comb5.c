@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /**
- * main - Print numbers ranging from 0-99, separated by a comma followed by a space.
+ * main - Print ranging from 0-99, separated by a comma followed by a space.
  *
  * Return: Always 0.
  */
