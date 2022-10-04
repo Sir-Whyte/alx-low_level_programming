@@ -3,39 +3,34 @@
 #include <stdlib.h>
 
 /**
- * **alloc_grid - function to allocate memory to grid
- * @width: int type
- * @width: int type
- * Return: grid of 0s
+ * alloc_grid - creates 2D array of ints
+ * @width: width of 2D array
+ * @height: height of 2D array
+ * Return: pointer to 2D array or NULL if failure
  */
 int **alloc_grid(int width, int height)
 {
-	int x, y;
-	int **ptr;
+	int **arr;
+	int i, j;
 
-	if (width <= 0 || height <= 0)
-	{
-		return  (NULL);
-	}
-	ptr = malloc(height * sizeof(int *));
-	if (ptr == NULL)
-	{
+	if (width < 1 || height < 1)
 		return (NULL);
-	}
-	for (x = 0; x < height; x++)
+	arr = malloc(sizeof(int *) * height);
+	if (arr == NULL)
+		return (NULL);
+	for (i = 0; i < height; i++)
 	{
-		ptr[x] = malloc(width * sizeof(int));
-		if (ptr[x] == NULL)
+		arr[i] = malloc(sizeof(int) * width);
+		if (arr[i] == NULL)
 		{
-			for (y = 0; y < x;  y++)
-				free(ptr[y]);
-			free(ptr);
+			for (--i; i >= 0; i--)
+				free(arr[i]);
+			free(arr);
 			return (NULL);
 		}
-		for (y = 0; y < width; y++)
-		{
-			ptr[x][y] = 0;
-		}
 	}
-	return (ptr);
+	for (i = 0; i < height; i++)
+		for (j = 0; j < width; j++)
+			arr[i][j] = 0;
+	return (arr);
 }
