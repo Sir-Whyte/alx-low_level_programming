@@ -1,4 +1,6 @@
 #include "main.h"
+#include <unistd.h>
+#include <limits.h>
 
 /**
  * get_bit - Gets the value of a bit at a given index.
