@@ -1,42 +1,40 @@
 #include "lists.h"
-
 /**
- * delete_dnodeint_at_index - Deletes a node from a dlistint_t
- * 			      at a given index.
- * @head: A pointer to the head of the dlistint_t.
- * @index: The index of the node to delete.
- *
- * Return: Upon success - 1.
- * 	   Otherwise - -1.
+ * delete_dnodeint_at_index - deletes node at the given position.
+ * @head: double pointer to list.
+ * @index: index of inserting position.
+ * Return: 1 if it succeeded, -1 if it failed
  */
 int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 {
-	dlistint_t *tmp = *head;
+	unsigned int i = 0;
+	dlistint_t *bfr_node = *head, *tmp_node = *head;
 
-	if (*head == NULL)
-		return (-1);
-
-	for (; index != 0; index--)
+	if (index == 0 && *head)
 	{
-		if (tmp == NULL)
-			return (-1);
-		tmp = tmp->next;
-	}
-
-	if (tmp == *head)
-	{
-		*head = tmp->next;
-		if (*head != NULL)
+		if ((*head)->next)
+		{
+			*head = (*head)->next;
 			(*head)->prev = NULL;
+			free(tmp_node);
+		}
+		else
+			*head = NULL;
+		return (1);
 	}
-
-	else
+	while (i < index - 1 && bfr_node)
 	{
-		tmp->prev->next = tmp->next;
-		if (tmp->next != NULL)
-			tmp->next->prev = tmp->prev;
+		bfr_node = bfr_node->next;
+		i++;
 	}
-
-	free(tmp);
-	return (1);
+	if (bfr_node)
+	{
+		tmp_node = bfr_node->next;
+		if (tmp_node->next)
+			tmp_node->next->prev = bfr_node;
+		bfr_node->next = tmp_node->next;
+		free(tmp_node);
+		return (1);
+	}
+	return (-1);
 }
